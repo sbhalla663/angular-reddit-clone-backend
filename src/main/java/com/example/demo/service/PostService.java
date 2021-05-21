@@ -50,7 +50,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostResponse> getAllPosts() {
-        return postRepository.findAll()
+        return postRepository.findAllByOrderByVoteCountDesc()
                 .stream()
                 .map(postMapper::mapToDto)
                 .collect(toList());
@@ -72,6 +72,10 @@ public class PostService {
                 .stream()
                 .map(postMapper::mapToDto)
                 .collect(toList());
+    }
+    public String deletePost(Long id) {
+        postRepository.deleteById(id);
+        return "{'message':'User deleted successfully.'}";
     }
 
 }

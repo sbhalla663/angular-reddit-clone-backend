@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.PostRequest;
 import com.example.demo.dto.PostResponse;
+import com.example.demo.exceptions.PostNotFoundException;
+import com.example.demo.model.Post;
 import com.example.demo.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.status;
 
@@ -43,4 +46,10 @@ public class PostController {
     public ResponseEntity<List<PostResponse>> getPostsByUsername(@PathVariable String name) {
         return status(HttpStatus.OK).body(postService.getPostsByUsername(name));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Long id) {
+        return new ResponseEntity<>(postService.deletePost(id), HttpStatus.OK);
+    }
+
 }
